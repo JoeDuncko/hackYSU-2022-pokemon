@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const pageLimit = 20;
 
 function Pokemons() {
-  const [pokemonsResponse, setPokemonsResponse] = useState([]);
+  const [pokemons, setPokemons] = useState([]);
   const [page, setPage] = useState(0);
 
   useEffect(() => {
@@ -13,9 +13,10 @@ function Pokemons() {
           pageLimit * page
         }`
       );
+
       const pokemonsResponse = await rawPokemonsResponse.json();
 
-      setPokemonsResponse(pokemonsResponse);
+      setPokemons(pokemonsResponse.results);
     };
 
     fetchPokemons();
@@ -24,7 +25,7 @@ function Pokemons() {
   return (
     <div>
       <h1>Pokemons</h1>
-      {pokemonsResponse.results?.map((pokemon) => (
+      {pokemons?.map((pokemon) => (
         <Pokemon key={pokemon.name} pokemon={pokemon} />
       )) ?? "Loading..."}
       <button disabled={page === 0} onClick={() => setPage(page - 1)}>
