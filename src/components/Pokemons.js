@@ -25,18 +25,27 @@ function Pokemons() {
   return (
     <div>
       <h1>Pokemons</h1>
-      {pokemons?.map((pokemon) => (
-        <Pokemon key={pokemon.name} pokemon={pokemon} />
-      )) ?? "Loading..."}
-      <button disabled={page === 0} onClick={() => setPage(page - 1)}>
-        Previous
-      </button>{" "}
-      {page} <button onClick={() => setPage(page + 1)}>Next</button>
+
+      <div>
+        {pokemons?.map((pokemon) => (
+          <PokemonListItem key={pokemon.name} pokemon={pokemon} />
+        ))}
+      </div>
+
+      <div>
+        <button disabled={page === 0} onClick={() => setPage(page - 1)}>
+          Previous
+        </button>
+
+        {page}
+
+        <button onClick={() => setPage(page + 1)}>Next</button>
+      </div>
     </div>
   );
 }
 
-const Pokemon = ({ pokemon }) => {
+const PokemonListItem = ({ pokemon }) => {
   return (
     <div>
       <p>{pokemon.name}</p>
