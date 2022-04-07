@@ -5,13 +5,17 @@ function Pokemon({ selectedPokemon, setSelectedPokemon }) {
 
   useEffect(() => {
     const fetchPokemon = async () => {
-      const rawPokemonResponse = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${selectedPokemon}`
-      );
+      try {
+        const rawPokemonResponse = await fetch(
+          `https://pokeapi.co/api/v2/pokemon/${selectedPokemon}`
+        );
 
-      const pokemonResponse = await rawPokemonResponse.json();
+        const pokemonResponse = await rawPokemonResponse.json();
 
-      setPokemon(pokemonResponse);
+        setPokemon(pokemonResponse);
+      } catch (error) {
+        setPokemon("error");
+      }
     };
 
     fetchPokemon();
@@ -19,6 +23,17 @@ function Pokemon({ selectedPokemon, setSelectedPokemon }) {
 
   if (!pokemon) {
     return <div>Loading...</div>;
+  }
+
+  if (pokemon === "error") {
+    return (
+      <div>
+        <p>Error, Pokemon Not Found</p>
+        <div>
+          <button onClick={() => setSelectedPokemon(null)}>Close</button>
+        </div>
+      </div>
+    );
   }
 
   return (

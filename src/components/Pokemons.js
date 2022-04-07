@@ -26,6 +26,8 @@ function Pokemons({ setSelectedPokemon }) {
     <div>
       <h1>Pokemons</h1>
 
+      <Search setSelectedPokemon={setSelectedPokemon} />
+
       <div>
         {pokemons?.map((pokemon) => (
           <PokemonListItem
@@ -35,7 +37,6 @@ function Pokemons({ setSelectedPokemon }) {
           />
         ))}
       </div>
-
       <div>
         <button disabled={page === 0} onClick={() => setPage(page - 1)}>
           Previous
@@ -57,6 +58,25 @@ const PokemonListItem = ({ pokemon, setSelectedPokemon }) => {
         <button onClick={() => setSelectedPokemon(pokemon.name)}>View</button>{" "}
       </p>
     </div>
+  );
+};
+
+const Search = ({ setSelectedPokemon }) => {
+  const submit = (e) => {
+    e.preventDefault();
+
+    setSelectedPokemon(e.target.search.value);
+  };
+
+  return (
+    <form onSubmit={submit}>
+      <label>
+        Search:
+        <input type="text" name="search" />
+      </label>
+
+      <button type="submit">Search</button>
+    </form>
   );
 };
 
