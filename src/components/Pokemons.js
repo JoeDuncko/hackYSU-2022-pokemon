@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const pageLimit = 20;
 
-function Pokemons() {
+function Pokemons({ setSelectedPokemon }) {
   const [pokemons, setPokemons] = useState([]);
   const [page, setPage] = useState(0);
 
@@ -28,7 +28,11 @@ function Pokemons() {
 
       <div>
         {pokemons?.map((pokemon) => (
-          <PokemonListItem key={pokemon.name} pokemon={pokemon} />
+          <PokemonListItem
+            key={pokemon.name}
+            pokemon={pokemon}
+            setSelectedPokemon={setSelectedPokemon}
+          />
         ))}
       </div>
 
@@ -45,10 +49,13 @@ function Pokemons() {
   );
 }
 
-const PokemonListItem = ({ pokemon }) => {
+const PokemonListItem = ({ pokemon, setSelectedPokemon }) => {
   return (
     <div>
-      <p>{pokemon.name}</p>
+      <p>
+        {pokemon.name}{" "}
+        <button onClick={() => setSelectedPokemon(pokemon.name)}>View</button>{" "}
+      </p>
     </div>
   );
 };
